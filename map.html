@@ -1,0 +1,445 @@
+<html>
+<head>
+
+    <!-- Load css -->
+    <style type="text/css">
+        .ui-menu-item .imdbTitle{
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+        .ui-menu-item .imdbCast{
+            font-size: 0.7em;
+            font-style: italic;
+            line-height: 110%;
+            color: #666;
+        }
+        .ui-menu-item .imdbImage{
+            float: left;
+            margin-right: 5px;
+        }
+        .ui-menu-item .clear{
+            clear: both;
+        }
+    </style>
+    <link rel="stylesheet" type="text/css" href="css/sweetalert.css">
+    <link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
+
+    <!-- Load javascript libs -->
+    <script type="text/javascript" src="js/sweetalert-dev.js"></script>
+    <script type="text/javascript" src="js/jquery-3.1.0.min.js"></script>
+    <script type="text/javascript" src="js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+    <!-- Load custom javascript -->
+    <script type="text/javascript" src="js/cookies.js"></script>
+
+
+    <script type="text/javascript">
+        /**
+         * Created by pimp1 on 23.08.2016.
+         */
+        $( document ).ready(function() {
+
+            function loginPrompt() {
+                var user = getCookie("user");
+                console.log(user);
+                if (user.length <= 0) {
+                    swal(
+                        {
+                            title: "Who are you?",
+                            type: "input",
+                            showCancelButton: true,
+                            closeOnConfirm: false,
+                            animation: "slide-from-top",
+                            inputPlaceholder: "Name..."
+                        },
+                        function (inputValue) {
+                            if (inputValue === false)
+                                return false;
+                            if (inputValue === "") {
+                                swal.showInputError("You need to write something!");
+                                return false
+                            }
+                            setCookie("user", inputValue, 90);
+                            document.cookie = "username=" + inputValue;
+                            swal("Nice!", "You're in " + inputValue, "success");
+                        }
+                    );
+                }
+            }
+
+        });
+    </script>
+
+    <script type="text/javascript">
+        $( document ).ready(function() {
+
+            var users = {
+                "simen" : {
+                    username: "simen",
+                    "color": "#129793",
+                    "number": 2
+                },
+                "jokke": {
+                    username: "jokke",
+                    "color": "#505050",
+                    "number": 3
+                },
+                "patrick": {
+                    username: "patrick",
+                    "color": "#9bd7d5",
+                    "number": 4
+                },
+                "zoe": {
+                    username: "zoe",
+                    "color": "#ff7260",
+                    "number": 5
+                }
+            };
+
+
+            google.charts.load('current', {'packages': ['geochart']});
+            google.charts.setOnLoadCallback(drawMap);
+
+            function drawMap() {
+
+                var data = google.visualization.arrayToDataTable([
+                    ['Country', 'Popularity'],
+                    ['Afghanistan', 1],
+                    ['Albania', 1],
+                    ['Algeria', 1],
+                    ['Andorra', 1],
+                    ['Angola', 1],
+                    ['Antigua and Barbuda', 1],
+                    ['Argentina', 1],
+                    ['Armenia', 1],
+                    ['Aruba', 1],
+                    ['Australia', 1],
+                    ['Austria', 1],
+                    ['Azerbaijan', 1],
+                    ['Bahamas, The', 1],
+                    ['Bahrain', 1],
+                    ['Bangladesh', 1],
+                    ['Barbados', 1],
+                    ['Belarus', 1],
+                    ['Belgium', 1],
+                    ['Belize', 1],
+                    ['Benin', 1],
+                    ['Bhutan', 1],
+                    ['Bolivia', 1],
+                    ['Bosnia and Herzegovina', 1],
+                    ['Botswana', 1],
+                    ['Brazil', 1],
+                    ['Brunei', 1],
+                    ['Bulgaria', 1],
+                    ['Burkina Faso', 1],
+                    ['Burma', 1],
+                    ['Burundi', 1],
+                    ['Cambodia', 1],
+                    ['Cameroon', 1],
+                    ['Canada', 1],
+                    ['Cape Verde', 1],
+                    ['Central African Republic', 1],
+                    ['Chad', 1],
+                    ['Chile', 1],
+                    ['China', 1],
+                    ['Colombia', 1],
+                    ['Comoros', 1],
+                    ['Congo, Democratic Republic of the', 1],
+                    ['Congo, Republic of the', 1],
+                    ['Costa Rica', 1],
+                    ['Ivory Coast', 1],
+                    ['Croatia', 1],
+                    ['Cuba', 1],
+                    ['Curacao', 1],
+                    ['Cyprus', 1],
+                    ['Czech Republic', 1],
+                    ['Denmark', 1],
+                    ['Djibouti', 1],
+                    ['Dominica', 1],
+                    ['Dominican Republic', 1],
+                    ['East Timor (see Timor­Leste)', 1],
+                    ['Ecuador', 1],
+                    ['Egypt', 1],
+                    ['El Salvador', 1],
+                    ['Equatorial Guinea', 1],
+                    ['Eritrea', 1],
+                    ['Estonia', 1],
+                    ['Ethiopia', 1],
+                    ['Fiji', 1],
+                    ['Finland', 1],
+                    ['France', 1],
+                    ['Gabon', 1],
+                    ['Gambia, The', 1],
+                    ['Georgia', 1],
+                    ['Germany', 1],
+                    ['Ghana', 1],
+                    ['Greece', 1],
+                    ['Grenada', 1],
+                    ['Guatemala', 1],
+                    ['Guinea', 1],
+                    ['Guinea­Bissau', 1],
+                    ['Guyana', 1],
+                    ['Haiti', 1],
+                    ['Holy See', 1],
+                    ['Honduras', 1],
+                    ['Hong Kong', 1],
+                    ['Hungary', 1],
+                    ['Iceland', 1],
+                    ['India', 1],
+                    ['Indonesia', 1],
+                    ['Iran', 1],
+                    ['Iraq', 1],
+                    ['Ireland', 1],
+                    ['Israel', 1],
+                    ['Italy', 1],
+                    ['Jamaica', 1],
+                    ['Japan', 1],
+                    ['Jordan', 1],
+                    ['Kazakhstan', 1],
+                    ['Kenya', 1],
+                    ['Kiribati', 1],
+                    ['Kosovo', 1],
+                    ['Kuwait', 1],
+                    ['Kyrgyzstan', 1],
+                    ['Laos', 1],
+                    ['Latvia', 1],
+                    ['Lebanon', 1],
+                    ['Lesotho', 1],
+                    ['Liberia', 1],
+                    ['Libya', 1],
+                    ['Liechtenstein', 1],
+                    ['Lithuania', 1],
+                    ['Luxembourg', 1],
+                    ['Macau', 1],
+                    ['Macedonia', 1],
+                    ['Madagascar', 1],
+                    ['Malawi', 1],
+                    ['Malaysia', 1],
+                    ['Maldives', 1],
+                    ['Mali', 1],
+                    ['Malta', 1],
+                    ['Marshall Islands', 1],
+                    ['Mauritania', 1],
+                    ['Mauritius', 1],
+                    ['Mexico', 1],
+                    ['Micronesia', 1],
+                    ['Moldova', 1],
+                    ['Monaco', 1],
+                    ['Mongolia', 1],
+                    ['Montenegro', 1],
+                    ['Morocco', 1],
+                    ['Mozambique', 1],
+                    ['Namibia', 1],
+                    ['Nauru', 1],
+                    ['Nepal', 1],
+                    ['Netherlands', 1],
+                    ['Netherlands Antilles', 1],
+                    ['New Zealand', 1],
+                    ['Nicaragua', 1],
+                    ['Niger', 1],
+                    ['Nigeria', 1],
+                    ['North Korea', 1],
+                    ['Norway', 1],
+                    ['Oman', 1],
+                    ['Pakistan', 1],
+                    ['Palau', 1],
+                    ['Palestinian Territories', 1],
+                    ['Panama', 1],
+                    ['Papua New Guinea', 1],
+                    ['Paraguay', 1],
+                    ['Peru', 1],
+                    ['Philippines', 1],
+                    ['Poland', 1],
+                    ['Portugal', 1],
+                    ['Qatar', 1],
+                    ['Romania', 1],
+                    ['Russia', 2],
+                    ['Rwanda', 1],
+                    ['Saint Kitts and Nevis', 1],
+                    ['Saint Lucia', 1],
+                    ['Saint Vincent and the Grenadines', 1],
+                    ['Samoa', 1],
+                    ['San Marino', 1],
+                    ['Sao Tome and Principe', 1],
+                    ['Saudi Arabia', 1],
+                    ['Senegal', 1],
+                    ['Serbia', 1],
+                    ['Seychelles', 1],
+                    ['Sierra Leone', 1],
+                    ['Singapore', 1],
+                    ['Sint Maarten', 1],
+                    ['Slovakia', 1],
+                    ['Slovenia', 1],
+                    ['Solomon Islands', 1],
+                    ['Somalia', 5],
+                    ['South Africa', 4],
+                    ['South Korea', 1],
+                    ['South Sudan', 1],
+                    ['Spain', 1],
+                    ['Sri Lanka', 1],
+                    ['Sudan', 1],
+                    ['Suriname', 1],
+                    ['Swaziland', 1],
+                    ['Sweden', 3],
+                    ['Switzerland', 1],
+                    ['Syria', 1],
+                    ['Taiwan', 1],
+                    ['Tajikistan', 1],
+                    ['Tanzania', 1],
+                    ['Thailand', 1],
+                    ['Timor­Leste', 1],
+                    ['Togo', 1],
+                    ['Tonga', 1],
+                    ['Trinidad and Tobago', 1],
+                    ['Tunisia', 1],
+                    ['Turkey', 1],
+                    ['Turkmenistan', 1],
+                    ['Tuvalu', 1],
+                    ['Uganda', 1],
+                    ['Ukraine', 1],
+                    ['United Arab Emirates', 1],
+                    ['United Kingdom', 1],
+                    ['US', 5],
+                    ['Uruguay', 1],
+                    ['Uzbekistan', 1],
+                    ['Vanuatu', 1],
+                    ['Venezuela', 1],
+                    ['Vietnam', 1],
+                    ['Yemen', 1],
+                    ['Zambia', 1],
+                    ['Scotland', 1],
+                    ['Wales', 1],
+                    ['England', 1],
+                    ['Zimbabwe',1]
+                ]);
+
+                var options = {
+
+                    dataMode: 'regions',
+                    resolution: 'countries',
+                    region: 'world',
+                    width: 1500,
+                    keepAspectRatio: true,
+                    datalessRegionColor: '#000000',
+                    backgroundColor: '#fff',
+                    colorAxis: {
+                        //colors: ['#003366', '#004411'],
+                        colors: ['#FFF5C3', users["simen"]["color"], users["jokke"]["color"], users["patrick"]["color"], users["zoe"]["color"]],
+                        values: [[1, 2], [2, 2]]
+                    },
+
+
+                };
+
+                function myClickHandler() {
+                    var selection = chart.getSelection();
+                    if (selection.length) {
+                        var selected_movie = "";
+                        var selected_movie_name = "";
+                        var selected_country = data.getValue(selection[0].row, 0);
+                        swal({
+                            title: selected_country,
+                            type: "info",
+                            showCancelButton: true,
+                            closeOnConfirm: false,
+                            showLoaderOnConfirm: true,
+                            html: true,
+                            text: '' +
+                            '<p>Last movie seen in this coyntry was The Shawshank Redemtion, by Jokkebro</p>' +
+                            '<p>Jokkebro is up by 1</p>' +
+                            '<h4>Add a movie you\'ve watched</h4>' +
+                            '<form action="" method="get">' +
+                            '<input type="text" name="q" class="movie-search" id="q" autofocus />' +
+                            '<input name="s" value="all" type="hidden" />' +
+                            '</form>' +
+                            '<br /><br />Cant find a movie? Message Simen'
+                        },
+                        function () {
+
+                            // Insert the watched movie to db...
+                            if(selected_movie.length > 0) {
+
+                                request = $.ajax({
+                                    url: "scripts/insert.php",
+                                    type: "get",
+                                    data: {"imdb_id": selected_movie},
+                                    dataType: "json"
+
+                                });
+                                request.done(function (response, textStatus, jqXHR){
+                                    // Log a message to the console
+                                    console.log(response);
+                                    console.log(textStatus);
+
+                                    if(response['status'] == "error") {
+                                        var error_message = "Unkown error";
+                                        if (response['error_reason'] == "movie_already_watched") {
+                                            error_message = "Movie already tagged";
+                                        }
+                                        swal({
+                                            type: "error",
+                                            title: "There was an error",
+                                            text: error_message
+
+                                        });
+                                    }
+                                    else {
+                                        swal({
+                                            type: "info",
+                                            title: "Success",
+                                            animation: "pop",
+                                            text: selected_movie_name + " was added to " + selected_country + "."
+                                        });
+                                    }
+                                });
+                            }
+
+                        });
+                        // jQuery and AJAX for Movie search.
+                        $(function () {
+                            //$("#q").focus(); //Focus on search field
+                            $("#q").autocomplete({
+                                minLength: 0,
+                                delay: 5,
+                                source: "scripts/fetch_movies.php",
+                                focus: function (event, ui) {
+                                    $(this).val(ui.item.label);
+                                    return false;
+                                },
+                                select: function (event, ui) {
+                                    selected_movie = ui.item.value;
+                                    selected_movie_name = ui.item.label;
+                                    $(this).val(ui.item.label);
+                                    return false;
+                                }
+                            }).data("uiAutocomplete")._renderItem = function (ul, item) {
+                                return $("<li></li>")
+                                        .data("item.autocomplete", item)
+                                        .append(
+                                                "<a><span class='imdbTitle'>"
+                                                + item.label + "</span>"
+                                                + (item.cast ? "<br /><span class='imdbCast'>" + item.cast + "</span>" : "")
+                                                + "<div class='clear'></div></a>")
+                                        .appendTo(ul);
+                            };
+                        });
+                        //End jQuery/AJAX
+                }
+            }
+
+
+            var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
+            google.visualization.events.addListener(chart, 'select',
+                    myClickHandler);
+            chart.draw(data, options);
+        }
+        });
+    </script>
+</head>
+<body>
+
+<div id="regions_div" style="width: 1400px; height: 900px;"></div>
+</body>
+</html>
